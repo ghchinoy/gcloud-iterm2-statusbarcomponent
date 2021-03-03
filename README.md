@@ -11,6 +11,7 @@ This calls `gcloud config get-value project` and assumes 1) that you have a Goog
 Install this by:
 
 * Placing the script in `$HOME/Library/ApplicationSupport/iTerm2/Scripts/AutoLaunch` directory.
-   Note, you may have to create `AutoLaunch` in `$HOME/Library/ApplicationSupport/iTerm2/Scripts`.  You may also have to enable the [Python API within iTerm2](https://iterm2.com/python-api-auth.html).
+
+   You may have to create the `AutoLaunch` dir in `$HOME/Library/ApplicationSupport/iTerm2/Scripts`.  You may also have to enable the [Python API within iTerm2](https://iterm2.com/python-api-auth.html).
 
 * Restarting iTerm2.
