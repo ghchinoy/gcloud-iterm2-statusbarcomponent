@@ -17,6 +17,20 @@ def getGcloudProject():
     stdout, stderr = proc.communicate()
     return f'☁ {stdout.decode().strip()}' if not stderr else '☁ gcloud not installed!'
 
+def listGcloudProjects():
+    gcloud_projects = str(Path.home()) + '/dev/google-cloud-sdk/bin/gcloud projects list'
+    proc =  subprocess.Popen(
+            shlex.split(gcloud_projects),
+            stdout=subprocess.PIPE,
+            stderr=subprocess.PIPE,
+        )
+    stdout, stderr = proc.communicate()
+    projectlistall = f'{stdout.decode()}'.split()
+    
+    projectlist = projectlistall[3:]
+    print(projectlist)
+    return ''.join(map(str, projectlist))
+
 async def main(connection):
     # Define the configuration knobs:
     knobs = []
@@ -34,7 +48,14 @@ async def main(connection):
             project=iterm2.Reference("iterm2.user.gcloudproject?")):
         return getGcloudProject()
 
+    @iterm2.RPC
+    async def click_handler(project):
+        await component.async_open_popover(
+            project,
+            listGcloudProjects(),
+            iterm2.Size(200,200))
+  
     # Register the component.
-    await component.async_register(connection, coro)
+    await component.async_register(connection, coro, onclick = click_handler)
 
 iterm2.run_forever(main)
